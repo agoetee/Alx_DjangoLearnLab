@@ -28,6 +28,7 @@ balme.books.add(things, dilemma)
 
 # List all books in Library
 balme.books.all()
+Library.objects.get(name=balme)
 
 # Add Librarian
 agyim = Librarian.objects.create(name='Agyim Taala', library=balme)
