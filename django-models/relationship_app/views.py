@@ -6,13 +6,13 @@ from .models import Book
 from .models import Library
 
 # Create your views here.
-def list_all_books(request):
+def list_books(request):
     items = Book.objects.all()
     book_list = [f"{i.title} by {i.author}" for i in items]
     return render(request, "relationship_app/list_books.html", {"book_list": book_list})
 
 
-class LibraryBooks(DetailView):
+class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
