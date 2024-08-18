@@ -1,11 +1,30 @@
 from typing import Any
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic.detail import DetailView
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import UserCreationForm
 from .models import Book
 from .models import Library
 
 # Create your views here.
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
+
+class LoginView(LoginView):
+    template_name = 'login.html'
+
+def index(request):
+    return render(request, 'index.html')
+
+
 def list_books(request):
     items = Book.objects.all()
     book_list = [f"{i.title} by {i.author}" for i in items]
