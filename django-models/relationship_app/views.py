@@ -16,7 +16,7 @@ def register(request):
             return redirect('login')
     else:
         form = UserCreationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'relationship_app/register.html', {'form': form})
 
 class LoginView(login):
     template_name = 'login.html'
@@ -26,7 +26,7 @@ def logout_view(request):
     return render(request, 'relationship_app/logout.html')
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'relationship_app/index.html')
 
 
 def list_books(request):
