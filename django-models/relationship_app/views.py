@@ -6,4 +6,5 @@ from .models import Book
 def list_all_books(request):
     items = Book.objects.all()
     book_list = [f"{i.title} by {i.author}" for i in items]
-    return HttpResponse(f'{book_list}')
+    print(book_list)
+    return render(request, "relationship_app/list_books.html", {"book_list": book_list})
