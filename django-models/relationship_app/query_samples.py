@@ -5,16 +5,20 @@ chinua = Author.objects.create(name="Chinua Achebe")
 chinua.save()
 ama = Author.objects.create(name="Ama Ata Aidoo")
 ama.save()
+author_name = Author.objects.create(name='Author Name')
 
 #Add Book objects
 things = Book.objects.create(title="Things Fall Apart", author=chinua) 
-dilemma = Book.objects.create(title="Dilemma of a Ghost", author=ama) 
+dilemma = Book.objects.create(title="Dilemma of a Ghost", author=ama)
+
 things.save()
 dilemma.save()
 
 # Get books by one author
 Book.objects.get(author=ama) 
-Book.objects.get(author=chinua) 
+Book.objects.get(author=chinua)
+Author.objects.get(name=author_name)
+Author.objects.filter(author=author)
 
 # List all books
 Book.objects.all()
