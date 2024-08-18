@@ -40,3 +40,4 @@ agyim.save()
 
 #Retrieve a Libryrian for a library
 agyim.library
+Librarian.objects.get(library=balme)
