@@ -2,7 +2,7 @@ from typing import Any
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic.detail import DetailView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .models import Book
 from .models import Library
@@ -18,7 +18,7 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
-class LoginView(LoginView):
+class LoginView(login):
     template_name = 'login.html'
 
 def index(request):
