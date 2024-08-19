@@ -2,6 +2,7 @@ from typing import Any
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic.detail import DetailView
+from django.views.generic import View
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .models import Book
@@ -18,12 +19,14 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-class LoginView(login):
-    template_name = 'login.html'
+# class LoginView(View):
+#     def get(self, request, *args, **kwargs):
+#         return login(request, template_name = 'relationship_app/login.html')
+    
 
-def logout_view(request):
-    logout(request)
-    return render(request, 'relationship_app/logout.html')
+# def logout_view(request):
+#     logout(request)
+#     return render(request, 'relationship_app/logout.html')
 
 def index(request):
     return render(request, 'relationship_app/index.html')
