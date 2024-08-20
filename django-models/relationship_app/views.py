@@ -5,18 +5,14 @@ from django.views.generic.detail import DetailView
 from django.views.generic import View
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
+
+
 from .models import Book, UserProfile
 from .models import Library
 
 # Create your views here.
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -47,4 +43,7 @@ class LibraryDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['library'] = self.object
         return context
+    
+
+
 
