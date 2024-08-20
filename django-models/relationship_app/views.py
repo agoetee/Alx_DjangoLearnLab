@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.views.generic.detail import DetailView
 from django.views.generic import View
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -44,6 +45,11 @@ class LibraryDetailView(DetailView):
         context['library'] = self.object
         return context
     
+#Check for Librarian
+def check_librarian(user):
+    return user.userprofile.role == 'Librarians'
 
-
+@user_passes_test(check_librarian)
+def librarian_view(request):
+    return render(request, 'relationship_app/libray_detail.html')
 
