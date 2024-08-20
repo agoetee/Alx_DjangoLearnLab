@@ -5,7 +5,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     ROLE_CHOICES = [
         ('Admin', 'Admin'),
-        ('Librarian', 'Librarians'),
+        ('Librarian', 'Librarian'),
         ('Member', 'Member')
     ]
     role = models.CharField(max_length=100, choices=ROLE_CHOICES)
