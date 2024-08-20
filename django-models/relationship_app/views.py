@@ -51,5 +51,5 @@ def check_librarian(user):
 
 @user_passes_test(check_librarian)
 def librarian_view(request):
-    return render(request, 'relationship_app/libray_detail.html')
+    return render(request, 'relationship_app/libraian_view.html')
 
