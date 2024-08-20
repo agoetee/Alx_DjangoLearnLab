@@ -58,7 +58,7 @@ def check_librarian(user):
 
 @user_passes_test(check_librarian)
 def librarian_view(request):
-    return render(request, 'relationship_app/libraian_view.html')
+    return render(request, 'relationship_app/librarian_view.html')
 
 #Checking if member exists
 def check_member(user):
