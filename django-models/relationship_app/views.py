@@ -44,7 +44,14 @@ class LibraryDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['library'] = self.object
         return context
-    
+
+def check_admin(user):
+    return user.userprofile.role == 'Admin'
+
+@user_passes_test(check_admin)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')  
+
 #Check for Librarian
 def check_librarian(user):
     return user.userprofile.role == 'Librarian'
