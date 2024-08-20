@@ -47,7 +47,7 @@ class LibraryDetailView(DetailView):
     
 #Check for Librarian
 def check_librarian(user):
-    return user.userprofile.role == 'Librarians'
+    return user.userprofile.role == 'Librarian'
 
 @user_passes_test(check_librarian)
 def librarian_view(request):
