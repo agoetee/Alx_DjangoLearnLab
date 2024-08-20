@@ -2,7 +2,8 @@ from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView, TemplateView
 from .views import list_books, LibraryDetailView, index
 from . import views
-from .views import librarian_view
+from .views import librarian_view, member_view
+from admin_view import admin_view
 
 
 urlpatterns = [
@@ -14,5 +15,7 @@ urlpatterns = [
     path('', index, name='index'),
     path('accounts/profile/', TemplateView.as_view(template_name='relationship_app/profile.html'), name='profile'),
 
-    path('librarian_view/', librarian_view, name='librarian_view')
+    path('admin/', admin_view, name='admin_view'),
+    path('librarian_view/', librarian_view, name='librarian_view'),
+    path('member_view/', member_view, name='member_view'),
 ]

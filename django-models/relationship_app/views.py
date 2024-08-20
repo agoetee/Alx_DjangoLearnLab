@@ -53,3 +53,11 @@ def check_librarian(user):
 def librarian_view(request):
     return render(request, 'relationship_app/libraian_view.html')
 
+#Checking if member exists
+def check_member(user):
+    return user.userprofile.role == 'Member'
+
+@user_passes_test(check_member)
+def member_view(request):
+    return render(request, "relationship_app/member_view.html")
+
