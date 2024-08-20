@@ -5,10 +5,18 @@ from django.views.generic.detail import DetailView
 from django.views.generic import View
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .models import Book
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .models import Book, UserProfile
 from .models import Library
 
 # Create your views here.
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -19,14 +27,6 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-# class LoginView(View):
-#     def get(self, request, *args, **kwargs):
-#         return login(request, template_name = 'relationship_app/login.html')
-    
-
-# def logout_view(request):
-#     logout(request)
-#     return render(request, 'relationship_app/logout.html')
 
 def index(request):
     return render(request, 'relationship_app/index.html')
