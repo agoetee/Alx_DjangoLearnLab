@@ -20,6 +20,6 @@ urlpatterns = [
     path('member_view/', member_view, name='member_view'),
 
     path('add_book/', add_book, name='add_book'),
-    path('change_book/<int:book_id>/', change_book, name='change_book'),
+    path('edit_book/<int:book_id>/', change_book, name='change_book'),
     path('delete_book/<int:book_id>/', delete_book, name='delete_book'),
 ]
