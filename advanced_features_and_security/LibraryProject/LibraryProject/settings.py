@@ -127,4 +127,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "/books/"
 LOGOUT_REDIRECT_URL = "/logout"
 
-AUTH_USER_MODEL = 'bookshelf.User'
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
