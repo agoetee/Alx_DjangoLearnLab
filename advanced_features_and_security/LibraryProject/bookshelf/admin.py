@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as CustomUserAdmin
 
-from .models import Book, User
+from .models import Book, CustomUser
 
 # Register your models here.
 class BookAdmin(admin.ModelAdmin):
@@ -15,4 +15,4 @@ admin.site.register(Book, BookAdmin)
 class UserAdmin(CustomUserAdmin):
     pass
 
-admin.site.register(User, UserAdmin)
+admin.site.register(CustomUser, UserAdmin)
