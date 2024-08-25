@@ -22,9 +22,9 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, "blog/register.html", {"form": form})
 
-def list_posts(request):
-    post = Post.objects.all()
-    return render(request, "blog/list_post.html", {"post": post})
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, "blog/book_list.html", {"post": books})
 
 @login_required
 @permission_required("blog.create", raise_exception=True)
