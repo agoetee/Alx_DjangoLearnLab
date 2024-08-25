@@ -12,7 +12,7 @@ class BookAdmin(admin.ModelAdmin):
 admin.site.register(Book, BookAdmin)
 
 
-class UserAdmin(CustomUserAdmin):
+class CustomUserAdmin(CustomUserAdmin):
     pass
 
-admin.site.register(CustomUser, UserAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
