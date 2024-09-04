@@ -2,12 +2,17 @@ from rest_framework import serializers
 from .models import Book, Author
 import datetime
 
-class AuthorSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=200)
+class AuthorSerializer(serializers.ModelSerializer):    
+    class Meta:
+        model = Author
+        filds = ['name']
+
 
 chima = Author(name='Chimmamanda Ngozie')
 
 class BookSerializer(serializers.ModelSerializer):
+    author = serializers.PrimaryKeyRelated(many=True, read_only=True)
+
     class Meta:
         model = Book
         fields = ['title', 'publication_year', 'author']
