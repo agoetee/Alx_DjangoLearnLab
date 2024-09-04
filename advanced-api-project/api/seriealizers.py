@@ -7,15 +7,15 @@ class AuthorSerializer(serializers.Serializer):
 
 chima = Author(name='Chimmamanda Ngozie')
 
-class BookSerializer(serializers.Serializer):
-    title = serializers.CharField()
-    publication_year = serializers.IntegerField(validate_year)
-    author = AuthorSerializer()
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['title', 'publication_year', 'author']
 
     def validate_year(self, data):
         current_year = datetime.date.today().year
         if data['publication_year'] > current_year:
-            raise serializers.validationError(f'Publication year cannot be greater than current year: {current_year}')
+            raise serializers.validationError(f'Publication year cannot be in the future. Current year: {current_year}')
         return data
 
 
