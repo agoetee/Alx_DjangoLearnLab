@@ -5,7 +5,19 @@ from .seriealizers import BookSerializer
 
 class BookCreateTest(APITestCase):
     def test_create_book(self):
-        response = self.client.post("books/create")
+        author = Author.objects.create(name="Chimmamanda Ngozie")
+        book = Book(
+            title="Purple Hibiscus",
+            author = author,
+            publication_year = 2002
+        )
+        data = {
+            'title': book.title,
+            'author': book.author.pk,
+            'publication_year': book.publication_year
+        }
+        response = self.client.post("books/create", data=data)
+        self.assertEqual(response.data['title'], data['title'])
         self.assertEqual(response.status_code, 200)
 
     def test_update_book(self):
