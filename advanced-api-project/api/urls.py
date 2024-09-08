@@ -4,7 +4,7 @@ from .views import CustomBookCreateView, CustomBookListView, CustomBookDetailVie
 urlpatterns = [
     path('books/', CustomBookListView.as_view(), name='list'),
     path('book/<int:pk>', CustomBookDetailView.as_view(), name='detail'),
-    path('book/<int:pk>', CustomBookUpdateView.as_view(), name='update'),
-    path('book/<int:pk>', CustomBookDeleteView.as_view(), name='delete'),
-    path('book/', CustomBookCreateView.as_view(), name='create'),
+    path('book/update/<int:pk>', CustomBookUpdateView.as_view(), name='update'),
+    path('book/delete/<int:pk>', CustomBookDeleteView.as_view(), name='delete'),
+    path('book/create', CustomBookCreateView.as_view(), name='create'),
 ]
