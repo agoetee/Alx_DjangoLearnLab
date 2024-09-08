@@ -11,7 +11,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 chima = Author(name='Chimmamanda Ngozie')
 
 class BookSerializer(serializers.ModelSerializer):
-    author = serializers.PrimaryKeyRelated(many=True, read_only=True)
+    author = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Book
