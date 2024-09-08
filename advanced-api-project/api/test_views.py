@@ -1,8 +1,8 @@
-from django.test import TestCase
+from django.test import APITestCase
 from .models import Book, Author
 from .seriealizers import BookSerializer
 
-class BookCreateTest(TestCase):
+class BookCreateTest(APITestCase):
     def setUp(self):
         self.author = Author.objects.create(name='Chimmamanda Ngozie')
 
