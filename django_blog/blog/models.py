@@ -18,12 +18,20 @@ class CustomUserManager(UserManager):
         return user
 
 class CustomUser(AbstractUser):
-    email = models.EmailField(unique=True, max_length=255)
+    username = models.CharField(unique=True, max_length=100)
+    email = None
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    # USERNAME_FIELD = 'email'
+    # REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()
+    # objects = CustomUserManager()
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    email = models.EmailField(unique=True)
+    bio = models.TextField()
+    picture = models.ImageField(upload_to="profile_pics", blank=True)
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
