@@ -67,7 +67,7 @@ class CreateView(LoginRequiredMixin, CreateView):
 
 class UpdateView(UpdateView):
     model = Post
-    template_name = 'update.html'
+    template_name = 'post_update.html'
 
 class DeleteView(DeleteView):
     model = Post
