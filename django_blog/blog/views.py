@@ -52,7 +52,7 @@ class ListView(ListView):
 
 class DetailView(DetailView):
     model = Post
-    template_name = 'post_detail.html'
+    template_name = 'post_view.html'
     context_object_name = 'post'
 
 class CreateView(LoginRequiredMixin, CreateView):
