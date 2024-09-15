@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import CustomUser, Post
 from .forms import ProfileForm, CreatePostForm
@@ -64,13 +64,18 @@ class CreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
 
 class UpdateView(UpdateView):
     model = Post
     template_name = 'post_edit.html'
 
-class DeleteView(DeleteView):
+class DeleteView(UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = 'posts/'
     context_object_name = 'post'
+
+    def test_func(self):
+        post = self.get_object()
+        return post.author == self.request.user
