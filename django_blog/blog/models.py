@@ -34,11 +34,17 @@ class Profile(models.Model):
     bio = models.TextField()
     picture = models.URLField(max_length=200, blank=True, null=True)
 
+
+class Tag(models.Model):
+    name = models.CharField(max_length=255)
+
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     published_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
