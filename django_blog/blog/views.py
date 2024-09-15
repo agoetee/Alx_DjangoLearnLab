@@ -48,16 +48,16 @@ def profile(request):
 
 class ListView(ListView):
     model = Post
-    template_name = 'books.html'
+    template_name = 'post_list.html'
 
 class DetailView(DetailView):
     model = Post
-    template_name = 'book_detail.html'
+    template_name = 'post_detail.html'
     context_object_name = 'post'
 
 class CreateView(LoginRequiredMixin, CreateView):
     model = Post
-    template_name = 'create_post.html'
+    template_name = 'post_create.html'
     form_class = CreatePostForm
     success_url = '/list/'
 
@@ -67,8 +67,8 @@ class CreateView(LoginRequiredMixin, CreateView):
 
 class UpdateView(UpdateView):
     model = Post
-    template_name = 'update_post.html'
+    template_name = 'update.html'
 
 class DeleteView(DeleteView):
     model = Post
-    template_name = 'delete_post.html'
+    template_name = 'post_delete.html'
