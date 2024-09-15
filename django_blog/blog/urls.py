@@ -6,10 +6,10 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('profile/', profile, name='profile'),
     path('edit_profile/', edit_profile, name='edit_profile' ),
-    path('posts/new/', CreateView.as_view(), name='new'),
+    path('post/new/', CreateView.as_view(), name='new'),
     path('posts/', ListView.as_view(), name='posts'),
-    path('posts/<int:pk>', DetailView.as_view(), name='detail'),
-    path('posts/<int:pk>/delete', DeleteView.as_view(), name='delete'),
-    path('posts/<int:pk>/edit', UpdateView.as_view(), name='update'),
+    path('post/<int:pk>', DetailView.as_view(), name='detail'),
+    path('post/<int:pk>/delete', DeleteView.as_view(), name='delete'),
+    path('post/<int:pk>/edit', UpdateView.as_view(), name='update'),
 
 ]
