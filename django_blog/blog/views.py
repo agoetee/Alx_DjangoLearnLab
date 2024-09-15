@@ -6,8 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import CustomUser, Post
-from .forms import ProfileForm, CreatePostForm
+from .models import CustomUser, Post, Comment
+from .forms import ProfileForm, CreatePostForm, CommentForm
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField()
@@ -79,3 +79,20 @@ class DeleteView(UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return post.author == self.request.user
+
+class CommentCreateView(CreateView):
+    model = Comment
+    template_name = 'comment_create.html'
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class CommentUpdateView(UpdateView):
+    model = Comment
+    template_name = "comment_update.html"
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+    template_name = 'comment_delete.html'
