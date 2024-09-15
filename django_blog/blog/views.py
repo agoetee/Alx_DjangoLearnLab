@@ -1,10 +1,13 @@
 from django import forms
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import CustomUser
-from .forms import ProfileForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import CustomUser, Post
+from .forms import ProfileForm, CreatePostForm
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField()
@@ -42,3 +45,30 @@ def edit_profile(request):
 @login_required
 def profile(request):
     return render(request, 'profile.html', {'user': request.user})
+
+class ListView(ListView):
+    model = Post
+    template_name = 'books.html'
+
+class DetailView(DetailView):
+    model = Post
+    template_name = 'book_detail.html'
+    context_object_name = 'post'
+
+class CreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    template_name = 'create_post.html'
+    form_class = CreatePostForm
+    success_url = '/list/'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class UpdateView(UpdateView):
+    model = Post
+    template_name = 'update_post.html'
+
+class DeleteView(DeleteView):
+    model = Post
+    template_name = 'delete_post.html'
