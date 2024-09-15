@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser, UserManager
+from django.conf import settings
 
 class CustomUserManager(UserManager):
     def create_user(self, email, password):
@@ -31,11 +32,17 @@ class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     email = models.EmailField(unique=True)
     bio = models.TextField()
-    picture = models.ImageField(upload_to="profile_pics", blank=True)
+    picture = models.URLField(max_length=200, blank=True, null=True)
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     published_date = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

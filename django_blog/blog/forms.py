@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Post
+from .models import Profile, Post, Comment
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -20,3 +20,8 @@ class UpdatePostForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'form-control'})
 
         }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content',]
