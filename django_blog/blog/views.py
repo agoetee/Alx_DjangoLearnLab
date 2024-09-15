@@ -72,3 +72,5 @@ class UpdateView(UpdateView):
 class DeleteView(DeleteView):
     model = Post
     template_name = 'post_delete.html'
+    success_url = 'posts/'
+    context_object_name = 'post'
