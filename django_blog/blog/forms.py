@@ -3,13 +3,14 @@ from taggit.forms import TagWidget
 from taggit.utils import slugify
 from .models import Profile, Post, Comment, Tag
 
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('email', 'bio', 'picture')
 
 class CreatePostForm(forms.ModelForm):
-    tags = forms.CharField(required=False, widget=TagWidget)
+    tags = forms.CharField(required=False, widget=TagWidget())
 
     class Meta:
         model = Post
