@@ -5,6 +5,8 @@ from rest_framework.response import Response
 
 from .models import CustomUser
 
+# serializers.CharField()
+
 class CustomUserSerializer(serializers.ModelSerializer):
     followers = serializers.SerializerMethodField()
     following = serializers.SerializerMethodField()
