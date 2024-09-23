@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -6,7 +7,7 @@ from rest_framework.response import Response
 from .models import CustomUser
 
 # serializers.CharField()
-
+User = get_user_model()
 class CustomUserSerializer(serializers.ModelSerializer):
     followers = serializers.SerializerMethodField()
     following = serializers.SerializerMethodField()
@@ -17,26 +18,33 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     
     
-class RegistrationSerializer(serializers.ModelSerializer):
+class RegistrationSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=200)
+    email = serializers.EmailField(max_length=255)
     password = serializers.CharField(min_length=8, write_only=True)
-    confirm_password = serializers.CharField(min_length=8, write_only=True)
+    # confirm_password = serializers.CharField(min_length=8, write_only=True)
 
-    class Meta:
-        model = get_user_model()
-        fields = ['username', 'email', 'password', 'confirm_password']
+    # class Meta:
+    #     model = get_user_model()
+    #     fields = ['username', 'email', 'password',]
 
-    def validate(self, data):
-        if data['password'] != data['confirm_password']:
-            raise serializers.ValidationError({'confirm_password': "Password mismatch"})
-        return data
+    def validate_password(self, value):
+        validate_password(value)
+        return value
+
         
     def create(self, validated_data):
-        user_data = {
-            'username' : validated_data['username'],
-            'email' : validated_data['email'],
-            'password' : validated_data['password'],
-        }
-        return get_user_model().objects.create_user(**user_data)
+        try:
+            user_data = {
+                'username' : validated_data['username'],
+                'email' : validated_data['email'],
+                'password' : validated_data['password'],
+            }
+            user = User.objects.create_user(**user_data)
+            token, _ = Token.objects.get_or_create(user=user)
+            return {'username': user.username, 'token': token.key}
+        except Exception as e:
+            raise serializers.ValidationError(str(e))
 
     
 class UserLoginSerializer(serializers.Serializer):
@@ -51,6 +59,9 @@ class UserLoginSerializer(serializers.Serializer):
         user = authenticate(username=username, password=password)
         if user is None:
             raise serializers.ValidationError({'detail': "Invalid Credentials"})
-        token, created = Token.objects.create(user=user)
-        return Response({'username': user.username, 'token': token.key})
+        token, created = Token.objects.get_or_create(user=user)
+
+        return {'username': user.username, 'token': token.key}
+        
+        # return Response({'username': user.username, 'token': token.key})
     
