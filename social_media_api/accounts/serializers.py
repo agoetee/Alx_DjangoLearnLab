@@ -7,42 +7,57 @@ from rest_framework.response import Response
 from .models import CustomUser
 
 # serializers.CharField()
-User = get_user_model()
 class CustomUserSerializer(serializers.ModelSerializer):
     followers = serializers.SerializerMethodField()
     following = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'bio', 'profile_pic', 'followers', 'following']
+        fields = ['username', 'email', 'bio', 'profile_picture', 'followers', 'following']
 
     
     
+# User = get_user_model()
 class RegistrationSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=200)
+    username = serializers.CharField(required=True)
     email = serializers.EmailField(max_length=255)
     password = serializers.CharField(min_length=8, write_only=True)
+    # token = serializers.CharField(required=False)
     # confirm_password = serializers.CharField(min_length=8, write_only=True)
 
     # class Meta:
     #     model = get_user_model()
-    #     fields = ['username', 'email', 'password',]
+    #     fields = ['username', 'email', 'password', 'token']
 
+    def get_token(self, username):
+        """Token generation method"""
+        user = get_user_model().objects.get(username=username)
+        return Token.objects.create(user=user)
+    
     def validate_password(self, value):
         validate_password(value)
         return value
-
-        
+       
     def create(self, validated_data):
         try:
             user_data = {
                 'username' : validated_data['username'],
                 'email' : validated_data['email'],
-                'password' : validated_data['password'],
+                'password' : validated_data['password']
             }
-            user = User.objects.create_user(**user_data)
-            token, _ = Token.objects.get_or_create(user=user)
-            return {'username': user.username, 'token': token.key}
+            user = get_user_model().objects.create_user(**user_data)
+            # if user:
+
+            #     self.token, created = Token.objects.get_or_create(user=user)
+            #     user_token = self.token.key
+            # else:
+            #     raise serializers.ValidationError({'detail': "Error in user creation"})
+
+            print(f"User created, Create token: {user.username}")
+
+            # token, _ = Token.objects.get_or_create(user=user)
+            # return {"user": user, "token": user_token}
+            return user
         except Exception as e:
             raise serializers.ValidationError(str(e))
 
