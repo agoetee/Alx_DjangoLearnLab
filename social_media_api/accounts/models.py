@@ -23,6 +23,9 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     bio = models.TextField()
     profile_picture = models.ImageField(max_length=200, null=True)
-    followers = models.ManyToManyField('self', symmetrical=False)
+    following = models.ManyToManyField('self', blank=True, symmetrical=False)
 
     objects = CustomUserManager()
+
+    def __str__(self):
+        return self.username
